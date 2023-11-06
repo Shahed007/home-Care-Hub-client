@@ -13,6 +13,7 @@ export default {
         text_color_normal: "#0A0A0A",
         text_color_dark: "#EBF1F1",
         bg_Dark: "#121212",
+        dark_component: "#34495E",
       },
     },
   },

@@ -1,8 +1,11 @@
 import Container from "../components/Container";
 import logo from "../assets/logo.png";
+import logoDark from "../assets/fav-icon.png";
 import { Link, NavLink } from "react-router-dom";
 import ButtonPrimary from "../components/button/ButtonPrimary";
+import { useEffect, useState } from "react";
 
+// desktop and mobile links
 const links = (
   <>
     <li>
@@ -44,6 +47,7 @@ const links = (
   </>
 );
 
+// dropdown links
 const dropdown = (
   <>
     <li className="w-full block border-b ">
@@ -86,13 +90,48 @@ const dropdown = (
 );
 
 const Navbar = () => {
+  const [darkMode, setDarkMode] = useState("light");
+
+  // handle dark mode
+  const handleChangeMod = () => {
+    const html = document.documentElement;
+    if (darkMode === "light") {
+      html.classList.remove("light");
+      html.classList.add("dark");
+      setDarkMode("dark");
+      localStorage.setItem("homeCareHub", "dark");
+    } else {
+      html.classList.remove("dark");
+      html.classList.add("light");
+      setDarkMode("light");
+      localStorage.setItem("homeCareHub", "light");
+    }
+  };
+
+  // getting mode from localStorage
+  useEffect(() => {
+    const mod = localStorage.getItem("homeCareHub");
+    const html = document.documentElement;
+    html.classList.add(mod);
+    setDarkMode(mod);
+  }, []);
+
   return (
     <Container>
       <nav className="flex justify-between items-center h-full relative z-50">
         <Link to="/">
-          <img src={logo} className="w-60" alt="home care hub logo" />
+          {darkMode === "dark" ? (
+            <div className="flex items-center gap-3">
+              <img src={logoDark} alt="dark mode logo" className="w-8" />
+              <h1 className="text-text_color_dark text-2xl font-medium">
+                HomeCareHub
+              </h1>
+            </div>
+          ) : (
+            <img src={logo} className="w-60" alt="home care hub logo" />
+          )}
         </Link>
-        <ul className="flex items-center gap-5 text-lg font-medium text-text_color_normal main-nav">
+        <ul className="flex items-center gap-5 text-lg font-medium dark:text-text_color_dark text-text_color_normal main-nav">
           {links}
           <li className="relative inline-block w-full group">
             <NavLink
@@ -121,7 +160,7 @@ const Navbar = () => {
                 </svg>
               </span>
             </NavLink>
-            <div className=" origin-top absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-primary_color ring-1 ring-black ring-opacity-5  transform scale-0 group-hover:scale-100 transition-transform duration-300">
+            <div className=" origin-top absolute left-0 mt-2 w-56 rounded-md shadow-lg dark:bg-dark_component bg-primary_color ring-1 ring-black ring-opacity-5  transform scale-0 group-hover:scale-100 transition-transform duration-300">
               <ul className="main-nav p-3 divide-y divide-gray-400">
                 {dropdown}
               </ul>
@@ -129,15 +168,24 @@ const Navbar = () => {
           </li>
         </ul>
         <div className="flex items-center gap-3 ">
-          <div className="bg-white h-10 w-10 rounded-full flex justify-center items-center shadow-inset-center">
-            <button>
+          <button
+            onClick={handleChangeMod}
+            className={` ${
+              darkMode === "dark" ? "bg-gray-700" : "bg-white"
+            } h-10 w-10 rounded-full flex justify-center items-center shadow-inset-center`}
+          >
+            <div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6"
+                className={`w-6 h-6 ${
+                  darkMode === "dark"
+                    ? "relative rotate-180 duration-300 text-white"
+                    : "hidden duration-300"
+                }`}
               >
                 <path
                   strokeLinecap="round"
@@ -145,11 +193,31 @@ const Navbar = () => {
                   d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
                 />
               </svg>
-            </button>
-          </div>
+            </div>
+            <div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className={`w-6 h-6 ${
+                  darkMode === "light"
+                    ? " duration-300 text-text_color_normal"
+                    : "hidden duration-300"
+                }`}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
+                />
+              </svg>
+            </div>
+          </button>
           <ButtonPrimary
             link="/login"
-            className="flex items-center gap-2 shadow-pop-tr"
+            className="flex items-center gap-2 shadow-pop-tr "
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
