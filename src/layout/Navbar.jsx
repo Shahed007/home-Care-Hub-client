@@ -328,7 +328,7 @@ const Navbar = () => {
 
       {/* MOBILE NAV */}
       <div
-        className={`absolute top-0 duration-500 ${
+        className={`absolute top-0 duration-500 dark:text-text_color_dark ${
           navbarToggle ? "left-0" : "-left-[999px]"
         }  w-full sm:w-1/2 h-screen z-[60] backdrop-blur bg-primary_color/60  dark:bg-dark_component`}
       >
@@ -409,6 +409,13 @@ const Navbar = () => {
           </ButtonPrimary>
         </div>
       </div>
+      {/* MOBILE NAV OVERLAY */}
+      <div
+        onClick={() => setNavbarToggle(false)}
+        className={`absolute top-0 z-50 left-0 bg-text_color_normal/10 ${
+          navbarToggle ? "w-full h-screen" : "w-0 h-0"
+        }`}
+      ></div>
     </>
   );
 };
