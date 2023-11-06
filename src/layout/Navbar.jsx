@@ -1,9 +1,9 @@
 import Container from "../components/Container";
-import logo from "../assets/logo.png";
 import logoDark from "../assets/fav-icon.png";
 import { Link, NavLink } from "react-router-dom";
 import ButtonPrimary from "../components/button/ButtonPrimary";
 import { useEffect, useState } from "react";
+import Logo from "../components/logo/Logo";
 
 // desktop and mobile links
 const links = (
@@ -179,36 +179,12 @@ const Navbar = () => {
     <>
       <Container>
         <nav className="flex justify-between items-center h-full relative z-50">
-          <Link to="/">
-            {darkMode === "dark" ? (
-              <div className="flex items-center gap-3">
-                <img
-                  src={logoDark}
-                  alt="dark mode logo"
-                  className="md:w-8 w-6"
-                />
-                <h1 className="text-text_color_dark text-xl md:text-2xl font-medium">
-                  HomeCareHub
-                </h1>
-              </div>
-            ) : (
-              <img
-                src={logo}
-                className="md:w-60 w-[180px]"
-                alt="home care hub logo"
-              />
-            )}
-          </Link>
+          <Logo></Logo>
           <ul className="lg:flex hidden items-center gap-5 text-lg font-medium dark:text-text_color_dark text-text_color_normal main-nav">
             {links}
             <li className="relative inline-block w-full group">
-              <NavLink
-                to="contact"
-                className={({ isActive }) =>
-                  isActive
-                    ? `after:bg-secondary_color after:h-[4px] after:w-full after:inline-block flex flex-col after:scale-100 after:duration-300 `
-                    : `hover:after:scale-100 after:bg-secondary_color after:h-[4px] after:w-full after:inline-block flex flex-col after:scale-0 after:duration-300`
-                }
+              <button
+                className={`after:bg-secondary_color after:h-[4px] hover:after:scale-100 after:w-full after:inline-block flex flex-col after:duration-300  after:duration-300 after:scale-0`}
               >
                 <span className="flex gap-1 items-center">
                   Dashboard
@@ -227,7 +203,7 @@ const Navbar = () => {
                     />
                   </svg>
                 </span>
-              </NavLink>
+              </button>
               <div className=" origin-top absolute left-0 mt-2 w-56 rounded-md shadow-lg dark:bg-dark_component bg-primary_color ring-1 ring-black ring-opacity-5  transform scale-0 group-hover:scale-100 transition-transform duration-300">
                 <ul className="main-nav p-3 divide-y divide-gray-400">
                   {dropdown}
@@ -332,7 +308,54 @@ const Navbar = () => {
           navbarToggle ? "left-0" : "-left-[999px]"
         }  w-full sm:w-1/2 h-screen z-[60] backdrop-blur bg-primary_color/60  dark:bg-dark_component`}
       >
-        <div className="flex justify-end mt-4 mr-3">
+        <div className="flex justify-between items-center m-4">
+          <button
+            onClick={handleChangeMod}
+            className={` ${
+              darkMode === "dark" ? "bg-gray-700" : "bg-white"
+            } h-10 w-10 rounded-full  justify-center items-center shadow-inset-center md:hidden flex`}
+          >
+            <div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className={`w-6 h-6 ${
+                  darkMode === "dark"
+                    ? "relative rotate-180 duration-300 text-white"
+                    : "hidden duration-300"
+                }`}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+                />
+              </svg>
+            </div>
+            <div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className={`w-6 h-6 ${
+                  darkMode === "light"
+                    ? " duration-300 text-text_color_normal"
+                    : "hidden duration-300"
+                }`}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
+                />
+              </svg>
+            </div>
+          </button>
           <button
             onClick={() => setNavbarToggle(false)}
             className="lg:hidden flex h-10 w-10  active:scale-95 dark:bg-gray-700 dark:text-text_color_dark bg-white rounded-full justify-center items-center shadow-sm ring-1 ring-gray-200"
