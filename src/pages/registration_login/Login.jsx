@@ -1,11 +1,13 @@
 import { motion } from "framer-motion";
-import image from "../../assets/image/mesh-833.png";
-import Container from "../../components/Container";
+
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import googleLogo from "../../assets/icon/google.png";
+import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
+  const { logIn } = useAuth();
+  const [loginErr, setLoginErr] = useState(null);
   const [loginInfo, setLoginInfo] = useState({
     email: null,
     password: null,
@@ -14,6 +16,7 @@ const Login = () => {
   console.log(loginInfo.email, loginInfo.password);
   const handleLogin = (e) => {
     e.preventDefault();
+    logIn(loginInfo.email, loginInfo.password);
   };
   return (
     <section className="bg-gradient-to-l px-3 to-transparent flex justify-center items-center  from-secondary_color/30 md:h-screen relative overflow-hidden ">
@@ -72,6 +75,7 @@ const Login = () => {
                 onBlur={(e) =>
                   setLoginInfo({ ...loginInfo, email: e.target.value })
                 }
+                required
                 type="text"
                 className="peer h-full w-full block border-b-[2px] border-text_color_normal/30 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-pink-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                 placeholder=" "
@@ -100,6 +104,7 @@ const Login = () => {
                 onBlur={(e) =>
                   setLoginInfo({ ...loginInfo, password: e.target.value })
                 }
+                required
                 type="password"
                 className="peer h-full w-full block border-b-[2px] border-text_color_normal/30 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-pink-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                 placeholder=" "

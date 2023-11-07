@@ -1,9 +1,20 @@
-import { Link, useAsyncError } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import googleLogo from "../../assets/icon/google.png";
+import useAuth from "../../hooks/useAuth";
+import { useMutation } from "@tanstack/react-query";
+import useAxios from "../../hooks/useAxios";
+// import toast, { Toaster } from "react-hot-toast";
 
 const Registration = () => {
+  const axios = useAxios();
+  const mutation = useMutation({
+    mutationFn: (users) => {
+      return axios.post("/users", users);
+    },
+  });
+  const { createUser, profileUpdate, setUser, user, googleLogIn } = useAuth();
   const [regisError, setRegisError] = useState({
     phoneErr: null,
     emailErr: null,
@@ -60,7 +71,42 @@ const Registration = () => {
       });
       return;
     }
+    const name = registInfo.name;
+    const image = registInfo.photoUrl;
+    const email = registInfo.email;
+    const location = registInfo.address;
+    const mobile = registInfo.phone;
+
+    createUser(registInfo.email, registInfo.password)
+      .then(() => {
+        setUser({ ...user, photoURL: registInfo.photoUrl });
+        profileUpdate(registInfo.name, registInfo.photoUrl);
+        mutation.mutate({ name, image, email, location, mobile });
+      })
+      .catch((err) => {
+        console.log(err.message);
+        if (err.message === "Firebase: Error (auth/email-already-in-use).") {
+          setRegisError({ ...regisError, emailErr: "Email already in use" });
+        }
+      });
   };
+
+  const hadleGoogleSignIn = () => {
+    googleLogIn()
+      .then((result) => {
+        const user = result.user;
+        setUser({
+          ...user,
+          photoURL: user.photoURL,
+          displayName: user.displayName,
+        });
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+  console.log(mutation.isSuccess ? "successful" : null);
   return (
     <section className="bg-gradient-to-l px-3 to-transparent flex justify-center items-center  from-secondary_color/30 relative overflow-hidden ">
       <motion.div
@@ -286,6 +332,15 @@ const Registration = () => {
               <label className="after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-500 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-pink-500 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] peer-placeholder-shown:text-blue-gray-500 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-pink-500 peer-focus:after:scale-x-100 peer-focus:after:border-pink-500 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
                 Email
               </label>
+              <p
+                className={`${
+                  regisError.emailErr
+                    ? "block py-2 text-red-600 text-sm"
+                    : "hidden"
+                }`}
+              >
+                {regisError.emailErr}
+              </p>
             </div>
 
             <div className="relative h-11 w-full ">
@@ -344,7 +399,10 @@ const Registration = () => {
             </Link>
           </p>
 
-          <button className="btn btn-block btn-ghost mt-5">
+          <button
+            className="btn btn-block btn-ghost mt-5"
+            onClick={hadleGoogleSignIn}
+          >
             Google Registration
             <img src={googleLogo} alt="google login" />
           </button>
