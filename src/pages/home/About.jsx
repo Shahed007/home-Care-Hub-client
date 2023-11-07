@@ -26,7 +26,7 @@ const About = () => {
             About Us
           </Title>
         </div>
-        <div className="flex items-center gap-6">
+        <div className="flex md:flex-row flex-col items-center gap-6">
           <div className="md:w-2/6">
             <img
               className="h-full w-full rounded"
