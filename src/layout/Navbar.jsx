@@ -1,9 +1,10 @@
 import Container from "../components/Container";
-import logoDark from "../assets/fav-icon.png";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import ButtonPrimary from "../components/button/ButtonPrimary";
 import { useEffect, useState } from "react";
 import Logo from "../components/logo/Logo";
+import useAuth from "../hooks/useAuth";
+import Avatar from "../components/profile/Avatar";
 
 // desktop and mobile links
 const links = (
@@ -147,6 +148,7 @@ const Mobiledropdown = (
 );
 
 const Navbar = () => {
+  const { user } = useAuth();
   const [darkMode, setDarkMode] = useState("light");
   const [navbarToggle, setNavbarToggle] = useState(false);
   const [dropdownToggle, setDropdownToggle] = useState(false);
@@ -182,41 +184,46 @@ const Navbar = () => {
           <Logo></Logo>
           <ul className="lg:flex hidden items-center gap-5 text-lg font-medium dark:text-text_color_dark text-text_color_normal main-nav">
             {links}
-            <li className="relative inline-block w-full group">
-              <button
-                className={`after:bg-secondary_color after:h-[4px] hover:after:scale-100 after:w-full after:inline-block flex flex-col after:duration-300  after:duration-300 after:scale-0`}
-              >
-                <span className="flex gap-1 items-center">
-                  Dashboard
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-                    />
-                  </svg>
-                </span>
-              </button>
-              <div className=" origin-top absolute left-0 mt-2 w-56 rounded-md shadow-lg dark:bg-dark_component bg-primary_color ring-1 ring-black ring-opacity-5  transform scale-0 group-hover:scale-100 transition-transform duration-300">
-                <ul className="main-nav p-3 divide-y divide-gray-400">
-                  {dropdown}
-                </ul>
-              </div>
-            </li>
+
+            {user ? (
+              <li className="relative inline-block w-full group">
+                <button
+                  className={`after:bg-secondary_color after:h-[4px] hover:after:scale-100 after:w-full after:inline-block flex flex-col after:duration-300  after:duration-300 after:scale-0`}
+                >
+                  <span className="flex gap-1 items-center">
+                    Dashboard
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                      />
+                    </svg>
+                  </span>
+                </button>
+                <div className=" origin-top absolute left-0 mt-2 w-56 rounded-md shadow-lg dark:bg-dark_component bg-primary_color ring-1 ring-black ring-opacity-5  transform scale-0 group-hover:scale-100 transition-transform duration-300">
+                  <ul className="main-nav p-3 divide-y divide-gray-400">
+                    {dropdown}
+                  </ul>
+                </div>
+              </li>
+            ) : (
+              <li></li>
+            )}
           </ul>
           <div className="flex items-center gap-3 ">
             <button
               onClick={handleChangeMod}
               className={` ${
                 darkMode === "dark" ? "bg-gray-700" : "bg-white"
-              } h-10 w-10 rounded-full  justify-center items-center shadow-inset-center md:flex hidden`}
+              } h-10 w-10 rounded-full   justify-center items-center shadow-inset-center md:flex hidden`}
             >
               <div>
                 <svg
@@ -259,26 +266,30 @@ const Navbar = () => {
                 </svg>
               </div>
             </button>
-            <ButtonPrimary
-              link="/login"
-              className="md:flex items-center gap-2 shadow-pop-tr md:px-[32px] px-4 hidden"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
+            {user === null ? (
+              <ButtonPrimary
+                link="/login"
+                className="md:flex items-center gap-2 shadow-pop-tr md:px-[32px] px-4 hidden"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-                />
-              </svg>
-              Login
-            </ButtonPrimary>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+                  />
+                </svg>
+                Login
+              </ButtonPrimary>
+            ) : (
+              <Avatar></Avatar>
+            )}
             <button
               onClick={() => setNavbarToggle(true)}
               className="lg:hidden flex h-10 w-10  active:scale-95 dark:bg-gray-700 dark:text-text_color_dark bg-white rounded-full justify-center items-center shadow-sm ring-1 ring-gray-200"
