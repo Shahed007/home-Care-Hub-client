@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { AiFillStar } from "react-icons/ai";
+import ButtonPrimary from "../button/ButtonPrimary";
 const Card = ({ popular }) => {
   const { _id, service_provider_name, image, services } = popular || [];
   return (
@@ -9,7 +10,7 @@ const Card = ({ popular }) => {
         alt={`photo of ${service_provider_name}`}
         className="object-cover object-center w-full rounded-t-md h-72"
       />
-      <div className="flex flex-col justify-between p-4 space-y-8">
+      <div className="flex flex-col justify-between p-4 ">
         <div className="space-y-2 border-b border-gray-200 pb-2 flex justify-between items-center">
           <figure className="flex gap-3 items-center">
             <img
@@ -31,12 +32,19 @@ const Card = ({ popular }) => {
             <p className="text-base font-medium">{services.rating}</p>
           </div>
         </div>
-        <button
-          type="button"
-          className="flex items-center justify-center w-full p-3 font-semibold tracki rounded-md dark:bg-violet-400 dark:text-gray-900"
-        >
-          Read more
-        </button>
+        <div className="mt-3 mb-6">
+          <h3 className="text-2xl mb-4 font-semibold">
+            {services.service_name}
+          </h3>
+          <p className="text-base">{services?.description.slice(0, 100)}...</p>
+        </div>
+
+        <h1 className="text-4xl font-medium text-center mb-7 text-secondary ">
+          {services.price}
+        </h1>
+        <ButtonPrimary className="flex justify-center items-center hover:bg-transparent">
+          Details
+        </ButtonPrimary>
       </div>
     </div>
   );
