@@ -16,6 +16,9 @@ const Avatar = () => {
       />
       <div className=" origin-top absolute right-0 mt-2 w-56 rounded-md shadow-lg dark:bg-dark_component bg-primary_color ring-1 ring-black ring-opacity-5  transform scale-0 group-hover:scale-100 transition-transform duration-300">
         <ul className=" p-3 divide-y divide-gray-400 text-lg dark:text-text_color_dark">
+          <h5 className="text-lg text-center font-bold mb-2">
+            {user.displayName}
+          </h5>
           <li>
             <NavLink
               to="/profile"

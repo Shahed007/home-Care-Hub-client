@@ -10,10 +10,19 @@ import {
 import PropTypes from "prop-types";
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase/firebase.config";
+import useAxios from "../hooks/useAxios";
+import { useMutation } from "@tanstack/react-query";
 
 export const AuthContext = createContext(null);
 const provider = new GoogleAuthProvider();
+
 const AuthProvider = ({ children }) => {
+  const axios = useAxios();
+  const mutation = useMutation({
+    mutationFn: (users) => {
+      return axios.post("/jwt", users);
+    },
+  });
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const createUser = (email, password) => {
@@ -45,15 +54,17 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (user) => {
-      console.log(user);
+      // console.log(user);
+      const email = user.email;
       setUser(user);
+      mutation.mutate({ email });
       setLoading(false);
     });
 
     return () => {
       unSubscribe();
     };
-  }, []);
+  }, [mutation]);
 
   const allAuth = {
     createUser,
