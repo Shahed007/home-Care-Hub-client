@@ -1,13 +1,66 @@
-import { Link } from "react-router-dom";
+import { Link, useAsyncError } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import googleLogo from "../../assets/icon/google.png";
 
 const Registration = () => {
-  const [loginInfo, setLoginInfo] = useState({
+  const [regisError, setRegisError] = useState({
+    phoneErr: null,
+    emailErr: null,
+    passwordErr: null,
+  });
+  const [registInfo, setregistInfo] = useState({
+    name: null,
+    address: null,
+    phone: null,
     email: null,
     password: null,
+    photoUrl: null,
   });
+
+  const handleRegistar = (e) => {
+    e.preventDefault();
+    setRegisError({
+      ...regisError,
+      phoneErr: null,
+      emailErr: null,
+      passwordErr: null,
+    });
+
+    if (registInfo.phone.length < 11) {
+      setRegisError({
+        ...regisError,
+        phoneErr: "phone number must be 11 character or not longer",
+      });
+      return;
+    } else if (registInfo.phone.length > 11) {
+      setRegisError({
+        ...regisError,
+        phoneErr: "phone number must be 11 character or not longer",
+      });
+      return;
+    }
+
+    if (registInfo.password.length < 6) {
+      setRegisError({
+        ...regisError,
+        passwordErr: "Password must be 6 character or longer",
+      });
+      return;
+    } else if (!/[A-Z]/.test(registInfo.password)) {
+      setRegisError({
+        ...regisError,
+        passwordErr: "Password must be have one upper case letter",
+      });
+      return;
+    } else if (!/[@$!%*?&]/.test(registInfo.password)) {
+      setRegisError({
+        ...regisError,
+        passwordErr: "Password must be have one spacial character",
+      });
+      return;
+    }
+  };
   return (
     <section className="bg-gradient-to-l px-3 to-transparent flex justify-center items-center  from-secondary_color/30 relative overflow-hidden ">
       <motion.div
@@ -59,10 +112,14 @@ const Registration = () => {
               Please enter your information for registration
             </p>
           </div>
-          <form className="mt-6 w-full  space-y-8">
-            <div className="flex items-center gap-4">
+          <form className="mt-6 w-full  space-y-8" onSubmit={handleRegistar}>
+            <div className="flex items-center gap-4 md:flex-row flex-col">
               <div className="relative h-11 w-full ">
                 <input
+                  onBlur={(e) =>
+                    setregistInfo({ ...registInfo, name: e.target.value })
+                  }
+                  required
                   type="text"
                   className="peer h-full w-full block border-b-[2px] border-text_color_normal/30 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-pink-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                   placeholder=" "
@@ -88,6 +145,10 @@ const Registration = () => {
               </div>
               <div className="relative h-11 w-full ">
                 <input
+                  onBlur={(e) =>
+                    setregistInfo({ ...registInfo, address: e.target.value })
+                  }
+                  required
                   type="text"
                   className="peer h-full w-full block border-b-[2px] border-text_color_normal/30 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-pink-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                   placeholder=" "
@@ -117,37 +178,92 @@ const Registration = () => {
                 </label>
               </div>
             </div>
-            <div className="relative h-11 w-full ">
-              <input
-                type="text"
-                className="peer h-full w-full block border-b-[2px] border-text_color_normal/30 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-pink-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                placeholder=" "
-              />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6 absolute top-4 right-0"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3"
+            <div className="flex md:flex-row flex-col gap-4 items-center">
+              <div className="relative h-11 w-full ">
+                <input
+                  onBlur={(e) =>
+                    setregistInfo({ ...registInfo, photoUrl: e.target.value })
+                  }
+                  required
+                  type="text"
+                  className="peer h-full w-full block border-b-[2px] border-text_color_normal/30 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-pink-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                  placeholder=" "
                 />
-              </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6 absolute top-4 right-0"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
+                  />
+                </svg>
 
-              <label className="after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-500 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-pink-500 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] peer-placeholder-shown:text-blue-gray-500 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-pink-500 peer-focus:after:scale-x-100 peer-focus:after:border-pink-500 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                Phone
-              </label>
+                <label className="after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-500 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-pink-500 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] peer-placeholder-shown:text-blue-gray-500 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-pink-500 peer-focus:after:scale-x-100 peer-focus:after:border-pink-500 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
+                  PhotoURL
+                </label>
+                {/* <p
+                  className={`${
+                    regisError.phoneErr
+                      ? "block py-2 text-red-600 text-sm"
+                      : "hidden"
+                  }`}
+                >
+                  {regisError.phoneErr}
+                </p> */}
+              </div>
+
+              <div className="relative h-11 w-full ">
+                <input
+                  onBlur={(e) =>
+                    setregistInfo({ ...registInfo, phone: e.target.value })
+                  }
+                  required
+                  type="number"
+                  className="peer h-full w-full block border-b-[2px] border-text_color_normal/30 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-pink-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                  placeholder=" "
+                />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6 absolute top-4 right-0"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3"
+                  />
+                </svg>
+
+                <label className="after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-500 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-pink-500 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] peer-placeholder-shown:text-blue-gray-500 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-pink-500 peer-focus:after:scale-x-100 peer-focus:after:border-pink-500 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
+                  Phone
+                </label>
+                <p
+                  className={`${
+                    regisError.phoneErr
+                      ? "block py-2 text-red-600 text-sm"
+                      : "hidden"
+                  }`}
+                >
+                  {regisError.phoneErr}
+                </p>
+              </div>
             </div>
 
             <div className="relative h-11 w-full ">
               <input
                 onBlur={(e) =>
-                  setLoginInfo({ ...loginInfo, email: e.target.value })
+                  setregistInfo({ ...registInfo, email: e.target.value })
                 }
+                required
                 type="text"
                 className="peer h-full w-full block border-b-[2px] border-text_color_normal/30 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-pink-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                 placeholder=" "
@@ -175,8 +291,9 @@ const Registration = () => {
             <div className="relative h-11 w-full ">
               <input
                 onBlur={(e) =>
-                  setLoginInfo({ ...loginInfo, password: e.target.value })
+                  setregistInfo({ ...registInfo, password: e.target.value })
                 }
+                required
                 type="password"
                 className="peer h-full w-full block border-b-[2px] border-text_color_normal/30 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-pink-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                 placeholder=" "
@@ -199,6 +316,15 @@ const Registration = () => {
               <label className="after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-500 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-pink-500 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] peer-placeholder-shown:text-blue-gray-500 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-pink-500 peer-focus:after:scale-x-100 peer-focus:after:border-pink-500 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
                 Password
               </label>
+              <p
+                className={`${
+                  regisError.passwordErr
+                    ? "block py-2 text-red-600 text-sm"
+                    : "hidden"
+                }`}
+              >
+                {regisError.passwordErr}
+              </p>
             </div>
 
             <button
@@ -219,7 +345,7 @@ const Registration = () => {
           </p>
 
           <button className="btn btn-block btn-ghost mt-5">
-            Google Rregistration
+            Google Registration
             <img src={googleLogo} alt="google login" />
           </button>
         </div>

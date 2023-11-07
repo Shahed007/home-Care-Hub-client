@@ -4,17 +4,12 @@
 @tailwind utilities;
 
 /* MAIN NAV ACTIVE */
-.main-nav .active {
-  display: flex;
-  flex-direction: column;
-}
-.main-nav .active::after {
-  content: "";
-  display: inline-block;
-  background-color: #06d6a0;
-  height: 4px;
-  width: 100%;
-  scale: 100;
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"] {
+  -webkit-appearance: none;
+  margin: 0;
+  -moz-appearance: textfield !important;
 }
 
 /* Animation */
