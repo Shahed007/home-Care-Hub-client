@@ -186,7 +186,7 @@ const Navbar = () => {
             {links}
 
             {user ? (
-              <li className="relative inline-block w-full group">
+              <li className="relative inline-block w-full group z-50">
                 <button
                   className={`after:bg-secondary_color after:h-[4px] hover:after:scale-100 after:w-full after:inline-block flex flex-col after:duration-300  after:duration-300 after:scale-0`}
                 >
@@ -266,7 +266,9 @@ const Navbar = () => {
                 </svg>
               </div>
             </button>
-            {user === null ? (
+            {user ? (
+              <Avatar></Avatar>
+            ) : (
               <ButtonPrimary
                 link="/login"
                 className="md:flex items-center gap-2 shadow-pop-tr md:px-[32px] px-4 hidden"
@@ -287,8 +289,6 @@ const Navbar = () => {
                 </svg>
                 Login
               </ButtonPrimary>
-            ) : (
-              <Avatar></Avatar>
             )}
             <button
               onClick={() => setNavbarToggle(true)}

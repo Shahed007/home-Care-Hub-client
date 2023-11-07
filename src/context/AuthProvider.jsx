@@ -54,11 +54,11 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (user) => {
-      // console.log(user);
-      const email = user.email;
+      // const email = user.email;
+      console.log(user);
       setUser(user);
-      mutation.mutate({ email });
       setLoading(false);
+      // mutation.mutate({ email });
     });
 
     return () => {
