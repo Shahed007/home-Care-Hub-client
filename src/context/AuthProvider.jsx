@@ -18,11 +18,7 @@ const provider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
   const axios = useAxios();
-  const mutation = useMutation({
-    mutationFn: (users) => {
-      return axios.post("/jwt", users);
-    },
-  });
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const createUser = (email, password) => {
@@ -54,17 +50,17 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (user) => {
-      // const email = user.email;
+      const email = user.email;
       console.log(user);
       setUser(user);
       setLoading(false);
-      // mutation.mutate({ email });
+      axios.post("/jwt", { email });
     });
 
     return () => {
       unSubscribe();
     };
-  }, [mutation]);
+  }, [axios]);
 
   const allAuth = {
     createUser,

@@ -3,6 +3,7 @@ import Container from "../../components/Container";
 import Title from "../../components/title/Title";
 import useAxios from "../../hooks/useAxios";
 import Card from "../../components/card/Card";
+import ButtonPrimary from "../../components/button/ButtonPrimary";
 
 const PopularService = () => {
   const axios = useAxios();
@@ -26,6 +27,10 @@ const PopularService = () => {
           {data?.data.map((service) => (
             <Card key={service._id} popular={service}></Card>
           ))}
+        </div>
+
+        <div className="text-center mt-12">
+          <ButtonPrimary link="/services">Show All</ButtonPrimary>
         </div>
       </Container>
     </section>
