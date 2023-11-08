@@ -2,7 +2,8 @@ import PropTypes from "prop-types";
 import { AiFillStar } from "react-icons/ai";
 import ButtonPrimary from "../button/ButtonPrimary";
 const Card = ({ popular }) => {
-  const { _id, service_provider_name, image, services } = popular || [];
+  const { _id, service_provider_name, image, service_name, services } =
+    popular || [];
   return (
     <div className="rounded-md shadow-md dark:bg-gray-900 backdrop-blur-md bg-text_color_dark/20 dark:text-text_color_dark">
       <img
@@ -33,9 +34,7 @@ const Card = ({ popular }) => {
           </div>
         </div>
         <div className="mt-3 mb-6">
-          <h3 className="text-2xl mb-4 font-semibold">
-            {services.service_name}
-          </h3>
+          <h3 className="text-2xl mb-4 font-semibold">{service_name}</h3>
           <p className="text-base">{services?.description.slice(0, 100)}...</p>
         </div>
 

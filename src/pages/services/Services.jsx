@@ -1,33 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
-import useAxios from "../../hooks/useAxios";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import Container from "../../components/Container";
-import Card from "../../components/card/Card";
 import { useState } from "react";
+import ServicesItem from "../servicedDetails/ServicesItem";
 
 const Services = () => {
-  const [active, setActive] = useState(0);
-  const axios = useAxios();
-  const itemParPage = 10;
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["services", active],
-    queryFn: () => axios.get(`/services?page=${active}&size=${itemParPage}`),
-  });
-
-  if (isLoading) return "loading";
-  const numberOfPages = Math.ceil(data?.data?.count / itemParPage);
-  const pages = [...Array(numberOfPages).keys()];
-
-  const handlePrev = () => {
-    if (active > 0) {
-      setActive(active - 1);
-    }
-  };
-
-  const handelNext = () => {
-    if (active < pages.length - 1) {
-      setActive(active + 1);
-    }
+  const [search, setSearch] = useState(" ");
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const search = e.target.search.value;
+    setSearch(search);
   };
   return (
     <section className="mt-[65px] mb-32">
@@ -36,8 +17,17 @@ const Services = () => {
         <Container>
           <div className="bg-secondary_color/70 backdrop-blur-md p-4 rounded-md flex md:flex-row flex-col md:items-center w-full gap-6">
             <fieldset className="md:w-2/3 space-y-1 dark:text-gray-100 ">
-              <div className="relative w-full ">
-                <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+              <form className="relative w-full " onSubmit={handleSearch}>
+                <input
+                  type="text"
+                  name="search"
+                  placeholder="Search..."
+                  className="block w-full py-2 pl-10  text-sm rounded-md focus:outline-none dark:bg-gray-800 dark:text-gray-100 focus:dark:bg-gray-900 focus:dark:border-violet-400"
+                />
+                <button
+                  type="submit"
+                  className="absolute inset-y-0 left-0 flex items-center pl-2"
+                >
                   <svg
                     fill="currentColor"
                     viewBox="0 0 512 512"
@@ -45,14 +35,8 @@ const Services = () => {
                   >
                     <path d="M479.6,399.716l-81.084-81.084-62.368-25.767A175.014,175.014,0,0,0,368,192c0-97.047-78.953-176-176-176S16,94.953,16,192,94.953,368,192,368a175.034,175.034,0,0,0,101.619-32.377l25.7,62.2L400.4,478.911a56,56,0,1,0,79.2-79.195ZM48,192c0-79.4,64.6-144,144-144s144,64.6,144,144S271.4,336,192,336,48,271.4,48,192ZM456.971,456.284a24.028,24.028,0,0,1-33.942,0l-76.572-76.572-23.894-57.835L380.4,345.771l76.573,76.572A24.028,24.028,0,0,1,456.971,456.284Z"></path>
                   </svg>
-                </span>
-                <input
-                  type="search"
-                  name="Search"
-                  placeholder="Search..."
-                  className="block w-full py-2 pl-10  text-sm rounded-md focus:outline-none dark:bg-gray-800 dark:text-gray-100 focus:dark:bg-gray-900 focus:dark:border-violet-400"
-                />
-              </div>
+                </button>
+              </form>
             </fieldset>
             <div className="flex-1 flex items-center gap-6">
               <fieldset className="w-full">
@@ -110,69 +94,7 @@ const Services = () => {
             </div>
           </div>
 
-          <div className="mt-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 grid">
-            {data?.data?.services.map((service) => (
-              <Card key={service._id} popular={service}></Card>
-            ))}
-          </div>
-
-          <div className="mt-12 flex items-center justify-center">
-            <div className="flex items-center gap-1">
-              <button
-                type="button"
-                onClick={handlePrev}
-                className="inline-flex active:scale-95  items-center px-2 py-2 text-sm font-semibold border rounded-l-md dark:border-gray-700"
-              >
-                <span className="sr-only">Previous</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                  className="w-5 h-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-              </button>
-              {pages?.map((item, idx) => (
-                <button
-                  onClick={() => setActive(item)}
-                  key={idx}
-                  className={`px-4 py-2 ring-1 ring-gray-300 text-sm font-semibold hover:bg-secondary_color duration-150 ${
-                    item === active
-                      ? "bg-secondary_color ring-secondary_color"
-                      : ""
-                  }`}
-                >
-                  {item + 1}
-                </button>
-              ))}
-              <button
-                type="button"
-                onClick={handelNext}
-                className="inline-flex active:scale-95  items-center px-2 py-2 text-sm font-semibold border rounded-r-md dark:border-gray-700"
-              >
-                <span className="sr-only">Next</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                  className="w-5 h-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-              </button>
-            </div>
-          </div>
+          <ServicesItem search={search}></ServicesItem>
         </Container>
       </div>
     </section>

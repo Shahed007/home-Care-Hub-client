@@ -11,17 +11,17 @@ const ServicesDetails = () => {
   const axios = useAxios();
   const data = useLoaderData();
 
-  const { service_provider_name, email, mobile, location, image, services } =
-    data.data || {};
   const {
-    category,
+    service_provider_name,
+    email,
     service_name,
-    price,
-    rating,
-    description,
-    features,
-    service_image,
-  } = services || {};
+    mobile,
+    location,
+    image,
+    services,
+  } = data.data || {};
+  const { category, price, rating, description, features, service_image } =
+    services || {};
 
   const {
     isLoading,
