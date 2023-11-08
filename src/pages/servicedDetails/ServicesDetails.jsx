@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Link, useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import useAxios from "../../hooks/useAxios";
 import Container from "../../components/Container";
 import PageHeader from "../../components/pageHeader/PageHeader";
@@ -93,7 +93,7 @@ const ServicesDetails = () => {
               />
             </div>
           </div>
-          <div className="mt-12">
+          <div className="mt-12 dark:text-text_color_dark">
             <h3 className="text-2xl font-bold">Service provider</h3>
             <div className="mt-8 flex items-center gap-5 sm:flex-row flex-col">
               <img
@@ -122,7 +122,7 @@ const ServicesDetails = () => {
           <div className="mt-14">
             <Title>Related Services</Title>
             <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {realtedService?.data?.slice(0, 3).map((popular) => (
+              {realtedService?.data?.services?.slice(0, 3).map((popular) => (
                 <Card key={popular._id} popular={popular}></Card>
               ))}
             </div>

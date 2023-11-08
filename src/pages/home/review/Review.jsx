@@ -4,7 +4,7 @@ import { AiFillStar } from "react-icons/ai";
 
 const Review = () => {
   return (
-    <section className="mt-32">
+    <section className="my-32">
       <div className="flex justify-center mb-14">
         <Title>Testimonial</Title>
       </div>
