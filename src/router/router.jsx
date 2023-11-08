@@ -3,6 +3,8 @@ import MainLayout from "../layout/MainLayout";
 import Home from "../pages/home/Home";
 import Login from "../pages/registration_login/Login";
 import Registration from "../pages/registration_login/Registration";
+import ServicesDetails from "../pages/servicedDetails/ServicesDetails";
+import axios from "axios";
 
 const router = createBrowserRouter([
   {
@@ -12,6 +14,12 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home></Home>,
+      },
+      {
+        path: "/serviceDetails/:id",
+        element: <ServicesDetails></ServicesDetails>,
+        loader: ({ params }) =>
+          axios.get(`http://localhost:5000/api/v1/services/${params.id}`),
       },
     ],
   },

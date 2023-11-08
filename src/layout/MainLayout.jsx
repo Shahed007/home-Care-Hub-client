@@ -16,7 +16,7 @@ const MainLayout = () => {
       <main>
         <Outlet />
       </main>
-      <footer className="mt-24 bg-secondary_color/60 dark:bg-dark_component text-text_color_normal dark:text-text_color_dark">
+      <footer className=" bg-secondary_color/60 dark:bg-dark_component text-text_color_normal dark:text-text_color_dark">
         <Footer></Footer>
       </footer>
     </div>

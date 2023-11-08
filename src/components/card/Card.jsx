@@ -42,7 +42,10 @@ const Card = ({ popular }) => {
         <h1 className="text-4xl font-medium text-center mb-7 text-secondary ">
           {services.price}
         </h1>
-        <ButtonPrimary className="flex justify-center items-center hover:bg-transparent">
+        <ButtonPrimary
+          link={`/serviceDetails/${_id}`}
+          className="flex justify-center items-center hover:bg-transparent"
+        >
           Details
         </ButtonPrimary>
       </div>

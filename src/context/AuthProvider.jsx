@@ -11,7 +11,6 @@ import PropTypes from "prop-types";
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase/firebase.config";
 import useAxios from "../hooks/useAxios";
-import { useMutation } from "@tanstack/react-query";
 
 export const AuthContext = createContext(null);
 const provider = new GoogleAuthProvider();
