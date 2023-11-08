@@ -6,6 +6,8 @@ import Registration from "../pages/registration_login/Registration";
 import ServicesDetails from "../pages/servicedDetails/ServicesDetails";
 import axios from "axios";
 import Services from "../pages/services/services";
+import PrivateRoute from "../pages/privateRoute/PrivateRoute";
+import AddServices from "../pages/addServices/AddServices";
 
 const router = createBrowserRouter([
   {
@@ -18,13 +20,25 @@ const router = createBrowserRouter([
       },
       {
         path: "/serviceDetails/:id",
-        element: <ServicesDetails></ServicesDetails>,
+        element: (
+          <PrivateRoute>
+            <ServicesDetails></ServicesDetails>
+          </PrivateRoute>
+        ),
         loader: ({ params }) =>
           axios.get(`http://localhost:5000/api/v1/services/${params.id}`),
       },
       {
         path: "/services",
         element: <Services></Services>,
+      },
+      {
+        path: "/addServices",
+        element: (
+          <PrivateRoute>
+            <AddServices></AddServices>
+          </PrivateRoute>
+        ),
       },
     ],
   },

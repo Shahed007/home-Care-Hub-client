@@ -3,6 +3,7 @@ import useAxios from "../../hooks/useAxios";
 import Card from "../../components/card/Card";
 import { useState } from "react";
 import PropTypes from "prop-types";
+import Animation from "../../components/animation/Animation";
 
 const ServicesItem = ({ search }) => {
   const axios = useAxios();
@@ -16,7 +17,7 @@ const ServicesItem = ({ search }) => {
       ),
   });
 
-  if (isLoading) return "loading";
+  if (isLoading) return <Animation></Animation>;
   const numberOfPages = Math.ceil(data?.data?.count / itemParPage);
   const pages = [...Array(numberOfPages).keys()];
 

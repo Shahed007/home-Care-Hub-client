@@ -6,152 +6,153 @@ import Logo from "../components/logo/Logo";
 import useAuth from "../hooks/useAuth";
 import Avatar from "../components/profile/Avatar";
 
-// desktop and mobile links
-const links = (
-  <>
-    <li>
-      <NavLink
-        to="/"
-        className={({ isActive }) =>
-          isActive
-            ? `after:bg-secondary_color after:h-[4px] after:w-full after:inline-block flex flex-col after:scale-100 after:duration-300 `
-            : `hover:after:scale-100 after:bg-secondary_color after:h-[4px] after:w-full after:inline-block flex flex-col after:scale-0 after:duration-300`
-        }
-      >
-        Home
-      </NavLink>
-    </li>
-    <li>
-      <NavLink
-        to="about"
-        className={({ isActive }) =>
-          isActive
-            ? `after:bg-secondary_color after:h-[4px] after:w-full after:inline-block flex flex-col after:scale-100 after:duration-300 `
-            : `hover:after:scale-100 after:bg-secondary_color after:h-[4px] after:w-full after:inline-block flex flex-col after:scale-0 after:duration-300`
-        }
-      >
-        About
-      </NavLink>
-    </li>
-    <li>
-      <NavLink
-        to="services"
-        className={({ isActive }) =>
-          isActive
-            ? `after:bg-secondary_color after:h-[4px] after:w-full after:inline-block flex flex-col after:scale-100 after:duration-300 `
-            : `hover:after:scale-100 after:bg-secondary_color after:h-[4px] after:w-full after:inline-block flex flex-col after:scale-0 after:duration-300`
-        }
-      >
-        Services
-      </NavLink>
-    </li>
-  </>
-);
-// MOBILE LINKS
-const Mobilelinks = (
-  <>
-    <li>
-      <NavLink
-        to="/"
-        className={({ isActive }) => (isActive ? `text-secondary_color` : "")}
-      >
-        Home
-      </NavLink>
-    </li>
-    <li>
-      <NavLink
-        to="about"
-        className={({ isActive }) => (isActive ? `text-secondary_color` : "")}
-      >
-        About
-      </NavLink>
-    </li>
-    <li>
-      <NavLink
-        to="services"
-        className={({ isActive }) => (isActive ? `text-secondary_color` : "")}
-      >
-        Services
-      </NavLink>
-    </li>
-  </>
-);
-
-// dropdown links
-const dropdown = (
-  <>
-    <li className="w-full block border-b ">
-      <NavLink
-        to="services"
-        className={({ isActive }) =>
-          isActive
-            ? `after:bg-secondary_color after:h-[4px] pb-1 w-full after:w-full after:inline-block flex flex-col after:scale-100 after:duration-300 `
-            : `hover:after:scale-100 after:bg-secondary_color w-full pb-1 after:h-[4px] after:w-full after:inline-block flex flex-col after:scale-0 after:duration-300`
-        }
-      >
-        My Services
-      </NavLink>
-    </li>
-    <li className="w-full block ">
-      <NavLink
-        to="services"
-        className={({ isActive }) =>
-          isActive
-            ? `after:bg-secondary_color after:h-[4px] pb-1 w-full after:w-full after:inline-block flex flex-col after:scale-100 after:duration-300 `
-            : `hover:after:scale-100 after:bg-secondary_color pb-1 w-full after:h-[4px] after:w-full after:inline-block flex flex-col after:scale-0 after:duration-300`
-        }
-      >
-        Add Services
-      </NavLink>
-    </li>
-    <li className="w-full block ">
-      <NavLink
-        to="services"
-        className={({ isActive }) =>
-          isActive
-            ? `after:bg-secondary_color after:h-[4px] w-full  after:w-full after:inline-block flex flex-col after:scale-100 after:duration-300 `
-            : `hover:after:scale-100 after:bg-secondary_color  w-full after:h-[4px] after:w-full after:inline-block flex flex-col after:scale-0 after:duration-300`
-        }
-      >
-        My Schedules
-      </NavLink>
-    </li>
-  </>
-);
-const Mobiledropdown = (
-  <>
-    <li className="w-full block ">
-      <NavLink
-        to="services"
-        className={({ isActive }) => (isActive ? `text-secondary_color` : "")}
-      >
-        My Services
-      </NavLink>
-    </li>
-    <li className="w-full block ">
-      <NavLink
-        to="services"
-        className={({ isActive }) => (isActive ? `text-secondary_color` : "")}
-      >
-        Add Services
-      </NavLink>
-    </li>
-    <li className="w-full block ">
-      <NavLink
-        to="services"
-        className={({ isActive }) => (isActive ? `text-secondary_color` : "")}
-      >
-        My Schedules
-      </NavLink>
-    </li>
-  </>
-);
-
 const Navbar = () => {
   const { user } = useAuth();
   const [darkMode, setDarkMode] = useState("light");
   const [navbarToggle, setNavbarToggle] = useState(false);
   const [dropdownToggle, setDropdownToggle] = useState(false);
+  console.log(user);
+
+  // desktop and mobile links
+  const links = (
+    <>
+      <li>
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            isActive
+              ? `after:bg-secondary_color after:h-[4px] after:w-full after:inline-block flex flex-col after:scale-100 after:duration-300 `
+              : `hover:after:scale-100 after:bg-secondary_color after:h-[4px] after:w-full after:inline-block flex flex-col after:scale-0 after:duration-300`
+          }
+        >
+          Home
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="about"
+          className={({ isActive }) =>
+            isActive
+              ? `after:bg-secondary_color after:h-[4px] after:w-full after:inline-block flex flex-col after:scale-100 after:duration-300 `
+              : `hover:after:scale-100 after:bg-secondary_color after:h-[4px] after:w-full after:inline-block flex flex-col after:scale-0 after:duration-300`
+          }
+        >
+          About
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="services"
+          className={({ isActive }) =>
+            isActive
+              ? `after:bg-secondary_color after:h-[4px] after:w-full after:inline-block flex flex-col after:scale-100 after:duration-300 `
+              : `hover:after:scale-100 after:bg-secondary_color after:h-[4px] after:w-full after:inline-block flex flex-col after:scale-0 after:duration-300`
+          }
+        >
+          Services
+        </NavLink>
+      </li>
+    </>
+  );
+  // MOBILE LINKS
+  const Mobilelinks = (
+    <>
+      <li>
+        <NavLink
+          to="/"
+          className={({ isActive }) => (isActive ? `text-secondary_color` : "")}
+        >
+          Home
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="about"
+          className={({ isActive }) => (isActive ? `text-secondary_color` : "")}
+        >
+          About
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="services"
+          className={({ isActive }) => (isActive ? `text-secondary_color` : "")}
+        >
+          Services
+        </NavLink>
+      </li>
+    </>
+  );
+
+  // dropdown links
+  const dropdown = (
+    <>
+      <li className="w-full block border-b ">
+        <NavLink
+          to="services"
+          className={({ isActive }) =>
+            isActive
+              ? `after:bg-secondary_color after:h-[4px] pb-1 w-full after:w-full after:inline-block flex flex-col after:scale-100 after:duration-300 `
+              : `hover:after:scale-100 after:bg-secondary_color w-full pb-1 after:h-[4px] after:w-full after:inline-block flex flex-col after:scale-0 after:duration-300`
+          }
+        >
+          My Services
+        </NavLink>
+      </li>
+      <li className="w-full block ">
+        <NavLink
+          to="/addServices"
+          className={({ isActive }) =>
+            isActive
+              ? `after:bg-secondary_color after:h-[4px] pb-1 w-full after:w-full after:inline-block flex flex-col after:scale-100 after:duration-300 `
+              : `hover:after:scale-100 after:bg-secondary_color pb-1 w-full after:h-[4px] after:w-full after:inline-block flex flex-col after:scale-0 after:duration-300`
+          }
+        >
+          Add Services
+        </NavLink>
+      </li>
+      <li className="w-full block ">
+        <NavLink
+          to="services"
+          className={({ isActive }) =>
+            isActive
+              ? `after:bg-secondary_color after:h-[4px] w-full  after:w-full after:inline-block flex flex-col after:scale-100 after:duration-300 `
+              : `hover:after:scale-100 after:bg-secondary_color  w-full after:h-[4px] after:w-full after:inline-block flex flex-col after:scale-0 after:duration-300`
+          }
+        >
+          My Schedules
+        </NavLink>
+      </li>
+    </>
+  );
+  const Mobiledropdown = (
+    <>
+      <li className="w-full block ">
+        <NavLink
+          to="services"
+          className={({ isActive }) => (isActive ? `text-secondary_color` : "")}
+        >
+          My Services
+        </NavLink>
+      </li>
+      <li className="w-full block ">
+        <NavLink
+          to="/addServices"
+          className={({ isActive }) => (isActive ? `text-secondary_color` : "")}
+        >
+          Add Services
+        </NavLink>
+      </li>
+      <li className="w-full block ">
+        <NavLink
+          to="services"
+          className={({ isActive }) => (isActive ? `text-secondary_color` : "")}
+        >
+          My Schedules
+        </NavLink>
+      </li>
+    </>
+  );
 
   // handle dark mode
   const handleChangeMod = () => {

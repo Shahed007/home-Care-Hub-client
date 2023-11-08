@@ -14,7 +14,7 @@ const Registration = () => {
       return axios.post("/users", users);
     },
   });
-  const { createUser, profileUpdate, setUser, user, googleLogIn } = useAuth();
+  const { createUser, profileUpdate, googleLogIn } = useAuth();
   const [regisError, setRegisError] = useState({
     phoneErr: null,
     emailErr: null,
@@ -79,7 +79,6 @@ const Registration = () => {
 
     createUser(registInfo.email, registInfo.password)
       .then(() => {
-        setUser({ ...user, photoURL: registInfo.photoUrl });
         profileUpdate(registInfo.name, registInfo.photoUrl);
         mutation.mutate({ name, image, email, location, mobile });
       })
@@ -93,14 +92,7 @@ const Registration = () => {
 
   const hadleGoogleSignIn = () => {
     googleLogIn()
-      .then((result) => {
-        const user = result.user;
-        setUser({
-          ...user,
-          photoURL: user.photoURL,
-          displayName: user.displayName,
-        });
-      })
+      .then()
       .catch((err) => {
         console.log(err.message);
       });

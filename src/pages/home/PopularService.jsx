@@ -4,6 +4,7 @@ import Title from "../../components/title/Title";
 import useAxios from "../../hooks/useAxios";
 import Card from "../../components/card/Card";
 import ButtonPrimary from "../../components/button/ButtonPrimary";
+import Animation from "../../components/animation/Animation";
 
 const PopularService = () => {
   const axios = useAxios();
@@ -12,7 +13,12 @@ const PopularService = () => {
     queryFn: async () => axios.get("/services?popular=popular"),
   });
 
-  if (isLoading) return "Loading...";
+  if (isLoading)
+    return (
+      <div>
+        <Animation></Animation>
+      </div>
+    );
 
   if (error) return "An error has occurred: " + error.message;
 
