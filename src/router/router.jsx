@@ -10,11 +10,13 @@ import PrivateRoute from "../pages/privateRoute/PrivateRoute";
 import AddServices from "../pages/addServices/AddServices";
 import MySchedules from "../pages/mySchedules/mySchedules";
 import MyServices from "../pages/myServices/MyServices";
+import ErrorPage from "../pages/errorPage/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         index: true,
