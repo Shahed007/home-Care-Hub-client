@@ -6,8 +6,10 @@ import PageHeader from "../../components/pageHeader/PageHeader";
 import { AiFillStar } from "react-icons/ai";
 import Title from "../../components/title/Title";
 import Card from "../../components/card/Card";
+import useAuth from "../../hooks/useAuth";
 
 const ServicesDetails = () => {
+  const { user } = useAuth();
   const axios = useAxios();
   const data = useLoaderData();
 
@@ -20,12 +22,12 @@ const ServicesDetails = () => {
     image,
     services,
   } = data.data || {};
-  const { category, price, rating, description, features, service_image } =
+  const { price, rating, description, features, service_image } =
     services || {};
 
   const {
     isLoading,
-    error,
+
     data: realtedService,
   } = useQuery({
     queryKey: ["serviceDetails"],
@@ -33,6 +35,35 @@ const ServicesDetails = () => {
   });
 
   if (isLoading) return "loading";
+
+  const handleParches = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const service_name = form.service_name.value;
+    const service_image = form.service_image.value;
+    const provider_email = form.provider_email.value;
+    const user_email = form.user_email.value;
+    const date = form.date.value;
+    const address = form.address.value;
+    const price = form.price.value;
+    const instruction = form.instruction.value;
+    const cart = {
+      service_name,
+      service_image,
+      provider_email,
+      user_email,
+      date,
+      address,
+      price,
+      instruction,
+    };
+    axios
+      .post("cart", cart)
+      .then(() => {})
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
 
   return (
     <section className="mt-[65px] bg-gradient-to-l to-secondary_color/30 from-transparent">
@@ -80,7 +111,12 @@ const ServicesDetails = () => {
                     {price}
                   </span>
                 </h1>
-                <button className="bg-secondary_color active:scale-95 py-3 block rounded w-full text-lg font-medium duration-150  border-2 border-transparent hover:border-secondary_color hover:text-secondary_color hover:bg-transparent">
+                <button
+                  onClick={() =>
+                    document.getElementById("my_modal_1").showModal()
+                  }
+                  className="bg-secondary_color active:scale-95 py-3 block rounded w-full text-lg font-medium duration-150  border-2 border-transparent hover:border-secondary_color hover:text-secondary_color hover:bg-transparent"
+                >
                   Book Now
                 </button>
               </div>
@@ -129,6 +165,110 @@ const ServicesDetails = () => {
           </div>
         </div>
       </Container>
+
+      {/* Open the modal using document.getElementById('ID').showModal() method */}
+      <dialog id="my_modal_1" className="modal">
+        <div className="modal-box">
+          <form onSubmit={handleParches} className="space-y-3">
+            <div className="flex flex-col gap-3">
+              <label htmlFor="">Service Name</label>
+              <input
+                type="text"
+                name="service_name"
+                placeholder="Type here"
+                defaultValue={service_name}
+                readOnly
+                className="input input-bordered w-full "
+              />
+            </div>
+            <div className="flex flex-col gap-3">
+              <label htmlFor="">Service Image</label>
+              <input
+                type="text"
+                name="service_image"
+                placeholder="Type here"
+                defaultValue={service_image}
+                readOnly
+                className="input input-bordered w-full "
+              />
+            </div>
+            <div className="flex flex-col gap-3">
+              <label htmlFor="">Service Provider email</label>
+              <input
+                type="text"
+                name="provider_email"
+                placeholder="Type here"
+                defaultValue={email}
+                readOnly
+                className="input input-bordered w-full "
+              />
+            </div>
+            <div className="flex flex-col gap-3">
+              <label htmlFor="">User email</label>
+              <input
+                type="text"
+                name="user_email"
+                placeholder="Type here"
+                defaultValue={user.email}
+                readOnly
+                className="input input-bordered w-full "
+              />
+            </div>
+            <div className="flex flex-col gap-3">
+              <label htmlFor="">Service Taking Date</label>
+              <input
+                type="date"
+                name="date"
+                placeholder="Type here"
+                required
+                className="input input-bordered w-full "
+              />
+            </div>
+            <div className="flex flex-col gap-3">
+              <label htmlFor="">address</label>
+              <input
+                type="address"
+                name="address"
+                required
+                placeholder="Type here"
+                className="input input-bordered w-full "
+              />
+            </div>
+            <div className="flex flex-col gap-3">
+              <label htmlFor="">Price</label>
+              <input
+                type="price"
+                name="price"
+                defaultValue={price}
+                readOnly
+                required
+                placeholder="Type here"
+                className="input input-bordered w-full "
+              />
+            </div>
+            <div className="flex flex-col gap-3">
+              <label htmlFor="">Special instruction</label>
+              <textarea
+                name="instruction"
+                placeholder="instruction"
+                className="w-full h-36 border-2 border-gray-600 p-3"
+                id=""
+                cols="30"
+                rows="10"
+              ></textarea>
+            </div>
+            <button type="submit" className="btn btn-block bg-secondary_color">
+              Purchase this Service
+            </button>
+          </form>
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </section>
   );
 };

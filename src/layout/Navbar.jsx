@@ -11,7 +11,6 @@ const Navbar = () => {
   const [darkMode, setDarkMode] = useState("light");
   const [navbarToggle, setNavbarToggle] = useState(false);
   const [dropdownToggle, setDropdownToggle] = useState(false);
-  console.log(user);
 
   // desktop and mobile links
   const links = (
@@ -113,7 +112,7 @@ const Navbar = () => {
       </li>
       <li className="w-full block ">
         <NavLink
-          to="services"
+          to="/myServices"
           className={({ isActive }) =>
             isActive
               ? `after:bg-secondary_color after:h-[4px] w-full  after:w-full after:inline-block flex flex-col after:scale-100 after:duration-300 `
@@ -145,7 +144,7 @@ const Navbar = () => {
       </li>
       <li className="w-full block ">
         <NavLink
-          to="services"
+          to="/myServices"
           className={({ isActive }) => (isActive ? `text-secondary_color` : "")}
         >
           My Schedules

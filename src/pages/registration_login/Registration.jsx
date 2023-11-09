@@ -1,19 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import googleLogo from "../../assets/icon/google.png";
 import useAuth from "../../hooks/useAuth";
-import { useMutation } from "@tanstack/react-query";
-import useAxios from "../../hooks/useAxios";
-// import toast, { Toaster } from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const Registration = () => {
-  const axios = useAxios();
-  const mutation = useMutation({
-    mutationFn: (users) => {
-      return axios.post("/users", users);
-    },
-  });
   const { createUser, profileUpdate, googleLogIn } = useAuth();
   const [regisError, setRegisError] = useState({
     phoneErr: null,
@@ -28,6 +20,9 @@ const Registration = () => {
     password: null,
     photoUrl: null,
   });
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleRegistar = (e) => {
     e.preventDefault();
@@ -80,7 +75,13 @@ const Registration = () => {
     createUser(registInfo.email, registInfo.password)
       .then(() => {
         profileUpdate(registInfo.name, registInfo.photoUrl);
-        mutation.mutate({ name, image, email, location, mobile });
+        Swal.fire({
+          title: "Success",
+          text: "Registration successful",
+          icon: "success",
+          confirmButtonText: "Cool",
+        });
+        location.state ? navigate(location.state) : navigate("/");
       })
       .catch((err) => {
         console.log(err.message);
@@ -98,7 +99,6 @@ const Registration = () => {
       });
   };
 
-  console.log(mutation.isSuccess ? "successful" : null);
   return (
     <section className="bg-gradient-to-l px-3 to-transparent flex justify-center items-center  from-secondary_color/30 relative overflow-hidden ">
       <motion.div

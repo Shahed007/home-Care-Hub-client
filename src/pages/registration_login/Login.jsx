@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import googleLogo from "../../assets/icon/google.png";
 import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const { logIn } = useAuth();
@@ -12,12 +13,22 @@ const Login = () => {
     email: null,
     password: null,
   });
+  const location = useLocation();
+  const navigate = useNavigate();
 
   console.log(loginInfo.email, loginInfo.password);
   const handleLogin = (e) => {
     e.preventDefault();
     logIn(loginInfo.email, loginInfo.password)
-      .then(() => {})
+      .then(() => {
+        Swal.fire({
+          title: "Success",
+          text: "Login successful",
+          icon: "success",
+          confirmButtonText: "Cool",
+        });
+        location?.state ? navigate(location.state) : navigate("/");
+      })
       .catch((err) => {
         if (
           err.message === "Firebase: Error (auth/invalid-login-credentials)."

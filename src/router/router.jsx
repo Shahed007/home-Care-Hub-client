@@ -8,6 +8,7 @@ import axios from "axios";
 import Services from "../pages/services/services";
 import PrivateRoute from "../pages/privateRoute/PrivateRoute";
 import AddServices from "../pages/addServices/AddServices";
+import MyServices from "../pages/myServices/MyServices";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <AddServices></AddServices>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/myServices",
+        element: (
+          <PrivateRoute>
+            <MyServices></MyServices>
           </PrivateRoute>
         ),
       },
