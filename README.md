@@ -1,8 +1,9 @@
-# React + Vite
+* For my website I used Farmer Motion for animations. I gave an effect to the home page with React Type Writer. I used it for transtech query op.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+* I have implemented login registration with firebase. A sweet alert can be seen if the user successfully logs in. Even after registration, you can see it. While logging in or registering, a set of messages will be shown below the input field.
 
-Currently, two official plugins are available:
+* Users can sell, buy, delete, or update services on my website
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* I have added pagination to my website. Pagination is fully functional. And added the search function.
+
+* my website fully responsive for mobile desktop and tablet.
