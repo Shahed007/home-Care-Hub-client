@@ -88,11 +88,11 @@ const Navbar = () => {
     <>
       <li className="w-full block border-b ">
         <NavLink
-          to="services"
+          to="/my"
           className={({ isActive }) =>
             isActive
               ? `after:bg-secondary_color after:h-[4px] pb-1 w-full after:w-full after:inline-block flex flex-col after:scale-100 after:duration-300 `
-              : `hover:after:scale-100 after:bg-secondary_color w-full pb-1 after:h-[4px] after:w-full after:inline-block flex flex-col after:scale-0 after:duration-300`
+              : `hover:after:scale-100 after:bg-secondary_color pb-1 w-full after:h-[4px] after:w-full after:inline-block flex flex-col after:scale-0 after:duration-300`
           }
         >
           My Services
@@ -112,7 +112,7 @@ const Navbar = () => {
       </li>
       <li className="w-full block ">
         <NavLink
-          to="/myServices"
+          to="/mySchedules"
           className={({ isActive }) =>
             isActive
               ? `after:bg-secondary_color after:h-[4px] w-full  after:w-full after:inline-block flex flex-col after:scale-100 after:duration-300 `
@@ -128,7 +128,7 @@ const Navbar = () => {
     <>
       <li className="w-full block ">
         <NavLink
-          to="services"
+          to="/my"
           className={({ isActive }) => (isActive ? `text-secondary_color` : "")}
         >
           My Services
@@ -144,7 +144,7 @@ const Navbar = () => {
       </li>
       <li className="w-full block ">
         <NavLink
-          to="/myServices"
+          to="/mySchedules"
           className={({ isActive }) => (isActive ? `text-secondary_color` : "")}
         >
           My Schedules
