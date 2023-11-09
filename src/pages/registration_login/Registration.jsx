@@ -66,11 +66,11 @@ const Registration = () => {
       });
       return;
     }
-    const name = registInfo.name;
-    const image = registInfo.photoUrl;
-    const email = registInfo.email;
-    const location = registInfo.address;
-    const mobile = registInfo.phone;
+    // const name = registInfo.name;
+    // const image = registInfo.photoUrl;
+    // const email = registInfo.email;
+    // const location = registInfo.address;
+    // const mobile = registInfo.phone;
 
     createUser(registInfo.email, registInfo.password)
       .then(() => {
@@ -93,7 +93,15 @@ const Registration = () => {
 
   const hadleGoogleSignIn = () => {
     googleLogIn()
-      .then()
+      .then(() => {
+        Swal.fire({
+          title: "Success",
+          text: "Registration successful",
+          icon: "success",
+          confirmButtonText: "Cool",
+        });
+        location.state ? navigate(location.state) : navigate("/");
+      })
       .catch((err) => {
         console.log(err.message);
       });

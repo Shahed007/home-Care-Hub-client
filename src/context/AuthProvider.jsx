@@ -50,9 +50,9 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
+      setLoading(false);
       const email = user.email;
       console.log(user);
-      setLoading(false);
       // axios.post("/jwt", { email });
     });
 

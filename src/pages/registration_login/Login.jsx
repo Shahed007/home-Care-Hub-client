@@ -7,7 +7,7 @@ import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 
 const Login = () => {
-  const { logIn } = useAuth();
+  const { logIn, googleLogIn } = useAuth();
   const [loginErr, setLoginErr] = useState(null);
   const [loginInfo, setLoginInfo] = useState({
     email: null,
@@ -16,7 +16,6 @@ const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  console.log(loginInfo.email, loginInfo.password);
   const handleLogin = (e) => {
     e.preventDefault();
     logIn(loginInfo.email, loginInfo.password)
@@ -36,6 +35,18 @@ const Login = () => {
           setLoginErr("Your email and password was invalid");
         }
       });
+  };
+
+  const handleGoogleLogin = () => {
+    googleLogIn().then(() => {
+      Swal.fire({
+        title: "Success",
+        text: "Login successful",
+        icon: "success",
+        confirmButtonText: "Cool",
+      });
+      location?.state ? navigate(location.state) : navigate("/");
+    });
   };
   return (
     <section className="bg-gradient-to-l px-3 to-transparent flex justify-center items-center  from-secondary_color/30 md:h-screen relative overflow-hidden ">
@@ -172,7 +183,10 @@ const Login = () => {
             </Link>
           </p>
 
-          <button className="btn btn-block btn-ghost mt-5">
+          <button
+            onClick={handleGoogleLogin}
+            className="btn btn-block btn-ghost mt-5"
+          >
             Google Login
             <img src={googleLogo} alt="google login" />
           </button>
