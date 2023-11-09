@@ -53,7 +53,7 @@ const AuthProvider = ({ children }) => {
       setLoading(false);
       const email = user.email;
       console.log(user);
-      // axios.post("/jwt", { email });
+      axios.post("/jwt", { email });
     });
 
     return () => {
