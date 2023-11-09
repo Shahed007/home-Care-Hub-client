@@ -1,18 +1,44 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Container from "../../components/Container";
 import Title from "../../components/title/Title";
 import PropTypes from "prop-types";
 import Animation from "../../components/animation/Animation";
 
-const MyPending = ({ handleChangeStatus, data1, loading, setStatus }) => {
+import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
+import useAuth from "../../hooks/useAuth";
+import useAxios from "../../hooks/useAxios";
+
+const MyPending = ({ refetch }) => {
+  const axios = useAxios();
+  const { user } = useAuth();
   const statusRef = useRef(null);
-  if (loading) return <Animation></Animation>;
+  const { isLoading, data } = useQuery({
+    queryKey: ["panding"],
+    queryFn: () => axios.get(`/provider/${user?.email}`),
+  });
+
+  if (isLoading) return <Animation></Animation>;
+  
 
   const handleSelect = (id) => {
-    setStatus(statusRef.current.value);
-    console.log(statusRef.current.value);
+    const status = statusRef.current.value;
+    const cart = {
+      id,
+      status,
+    };
 
-    handleChangeStatus(id);
+    axios.put("/cart", cart).then((res) => {
+      if (res.data.matchedCount > 0) {
+        Swal.fire({
+          title: "Success",
+          text: "Status updated successful",
+          icon: "success",
+          confirmButtonText: "Cool",
+        });
+        refetch();
+      }
+    });
   };
   return (
     <section className="my-32">
@@ -20,7 +46,7 @@ const MyPending = ({ handleChangeStatus, data1, loading, setStatus }) => {
         <div className="mb-12">
           <Title>My Pending works</Title>
         </div>
-        {data1.data.length === 0 ? (
+        {data?.data?.length === 0 ? (
           <div className="flex justify-center items-center text-center">
             <h1 className="text-2xl font-bold">You have no padding service</h1>
           </div>
@@ -38,7 +64,7 @@ const MyPending = ({ handleChangeStatus, data1, loading, setStatus }) => {
                 </tr>
               </thead>
               <tbody>
-                {data1?.data?.map((item) => (
+                {data?.data?.map((item) => (
                   <tr
                     key={item._id}
                     className="text-text_color_normal dark:text-text_color_dark"
@@ -55,6 +81,7 @@ const MyPending = ({ handleChangeStatus, data1, loading, setStatus }) => {
                     <td>{item.date}</td>
                     <td>
                       <select
+                        className="dark:bg-gray-600 dark:text-text_color_dark"
                         ref={statusRef}
                         onChange={() => handleSelect(item._id)}
                         name=""
@@ -77,9 +104,7 @@ const MyPending = ({ handleChangeStatus, data1, loading, setStatus }) => {
 };
 
 MyPending.propTypes = {
-  handleChangeStatus: PropTypes.func.isRequired,
-  loading: PropTypes.any,
-  setStatus: PropTypes.func,
+  refetch: PropTypes.func,
 };
 
 export default MyPending;

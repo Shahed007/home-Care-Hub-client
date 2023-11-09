@@ -28,7 +28,7 @@ const MyServices = () => {
       <PageHeader>My Services</PageHeader>
       {data?.data?.services.length === 0 ? (
         <div className="flex justify-center items-center h-screen w-full">
-          <h1 className="text-2xl font-bold text-center">
+          <h1 className="text-2xl font-bold text-center dark:text-text_color_dark">
             You not added any services
           </h1>
         </div>

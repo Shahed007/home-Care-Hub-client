@@ -6,48 +6,41 @@ import PageHeader from "../../components/pageHeader/PageHeader";
 import Container from "../../components/Container";
 import Title from "../../components/title/Title";
 import MyPending from "./MyPending";
-import { useState } from "react";
-import Swal from "sweetalert2";
+import { useEffect, useState } from "react";
 
 const MySchedules = () => {
-  const axios = useAxios();
-  const [status, setStatus] = useState(null);
   const { user } = useAuth();
-  const { isLoading, data } = useQuery({
-    queryKey: ["MySchedules", status],
-    queryFn: () => axios.get(`/cart?user_email=${user.email}`),
+  const axios = useAxios();
+  const [getUser, setUser] = useState(false);
+
+  const url = `/cart?user_email=${user.email}`;
+  const { isLoading, data, refetch } = useQuery({
+    queryKey: ["cart"],
+    enabled: getUser,
+    queryFn: async () => {
+      try {
+        const res = await axios.get(url);
+        return res.data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
   });
 
-  const { isLoading: loading, data: data1 } = useQuery({
-    queryKey: ["MyPending"],
-    queryFn: () => axios.get(`/cart?provider_email=${user.email}`),
-  });
+  useEffect(() => {
+    // refetch();
+    if (user.email) {
+      setUser(true);
+    }
+  }, [user]);
 
-  if (isLoading && loading)
+  if (isLoading)
     return (
       <div className="h-screen w-full">
         <Animation></Animation>
       </div>
     );
 
-  const handleChangeStatus = (id) => {
-    console.log(status);
-    const cart = {
-      id,
-      status,
-    };
-
-    axios.put("/cart", cart).then((res) => {
-      if (res.data.matchedCount > 0) {
-        Swal.fire({
-          title: "Success",
-          text: "Status updated successful",
-          icon: "success",
-          confirmButtonText: "Cool",
-        });
-      }
-    });
-  };
   return (
     <section className="mt-[65px]">
       <PageHeader>My Schedule</PageHeader>
@@ -56,7 +49,7 @@ const MySchedules = () => {
           <div className="mb-12">
             <Title>My Bookings</Title>
           </div>
-          {data?.data?.length === 0 ? (
+          {data?.length === 0 ? (
             <div className="flex justify-center items-center text-center">
               <h1 className="text-2xl font-bold dark:text-white">
                 You have no Bookings
@@ -76,7 +69,7 @@ const MySchedules = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data?.data?.map((item) => (
+                  {data?.map((item) => (
                     <tr
                       key={item._id}
                       className="text-text_color_normal dark:text-text_color_dark"
@@ -99,12 +92,7 @@ const MySchedules = () => {
             </div>
           )}
         </div>
-        <MyPending
-          handleChangeStatus={handleChangeStatus}
-          data1={data1}
-          loading={loading}
-          setStatus={setStatus}
-        ></MyPending>
+        <MyPending refetch={refetch}></MyPending>
       </Container>
     </section>
   );
