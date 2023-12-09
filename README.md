@@ -9,6 +9,9 @@ Server site code link: [HomeCareHub-server](https://github.com/Shahed007/Home-Ca
 ## I have used whatever technology on this website:
 On this website, I utilized React.js, Tailwind CSS, and Daysi UI for building the frontend. To enhance user engagement, I incorporated a subtle text typing animation using React-TypeWriter. For efficient data fetching, I employed TanStack Query. The backend is constructed using Express.js, MongoDB, and Node.js, with API security ensured through JWT (JSON Web Token). This combination of technologies and features contributes to a dynamic and secure user experience on the website.
 
+## Waht is the purpose of the building this website?
+
+The purpose of creating a home service selling website is to connect service providers with customers seeking various home-related services. This platform can facilitate the booking of services such as home repairs, maintenance, cleaning, landscaping, and more. The goal is to simplify the process for users to find and hire reliable service professionals, while also providing a platform for service providers to showcase their skills and reach a broader customer base. The website can enhance convenience, trust, and efficiency in the home service industry by streamlining the booking and payment processes.
 
 
 ## 5 Features of my project
