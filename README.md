@@ -1,9 +1,20 @@
-* For my website I used Farmer Motion for animations. I gave an effect to the home page with React Type Writer. I used it for transtech query op.
+# HomeCareHub
 
-* I have implemented login registration with firebase. A sweet alert can be seen if the user successfully logs in. Even after registration, you can see it. While logging in or registering, a set of messages will be shown below the input field.
+## 🔗 Links
+Live website link :
+[HomeCareHub](https://homecarehub-client.web.app)
 
-* Users can sell, buy, delete, or update services on my website
+Server site code link: [HomeCareHub-server](https://github.com/Shahed007/Home-Care-Hub-server-v1)
 
-* I have added pagination to my website. Pagination is fully functional. And added the search function.
+## I have used whatever technology on this website:
+On this website, I utilized React.js, Tailwind CSS, and Daysi UI for building the frontend. To enhance user engagement, I incorporated a subtle text typing animation using React-TypeWriter. For efficient data fetching, I employed TanStack Query. The backend is constructed using Express.js, MongoDB, and Node.js, with API security ensured through JWT (JSON Web Token). This combination of technologies and features contributes to a dynamic and secure user experience on the website.
 
-* my website fully responsive for mobile desktop and tablet.
+
+
+## 5 Features of my project
+
+- For my website, I integrated Farmer Motion for animations to create a visually engaging user experience. The home page features a distinctive effect courtesy of React Type Writer, enhancing the overall dynamism. Additionally, I employed Transtech Query for seamless data operations, ensuring an efficient and responsive user interface.
+- I implemented login and registration functionality using Firebase, providing users with a seamless authentication experience. Upon successful login, a visually appealing Sweet Alert is displayed to notify the user. This user-friendly approach extends to the registration process, where informative messages are presented below the input fields, guiding users through the login or registration journey. I also implant password validation in registration form.
+- Users on my website have the capability to add, sell, buy, delete, or update services. This versatile functionality empowers users to manage and customize their service offerings seamlessly, contributing to a dynamic and interactive user experience.
+- I have implemented fully functional pagination on my website, providing users with a smooth and organized navigation experience. Additionally, a search function has been integrated to enhance user accessibility and allow users to find specific content efficiently. These features collectively contribute to a user-friendly and efficient browsing experience on the website.
+- I've implemented a dark mode feature on my website, allowing users to seamlessly toggle between light and dark modes based on their preference. Moreover, the website is designed to be fully responsive, ensuring optimal user experience across various devices, including mobile phones, tablets, desktops, and laptops. This responsiveness contributes to a consistent and accessible presentation of content regardless of the user's device.
